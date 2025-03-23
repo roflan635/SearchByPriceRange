@@ -20,14 +20,13 @@ void AddFirst(ListItem*& firstItem, int productId, const char* productName, floa
 
 ListItem* GetLast(ListItem* firstItem)
 {
-    if (firstItem == nullptr) return nullptr; // если список пуст, то вернем пустой указатель
-    auto temp = firstItem; // временной переменной присваиваем указатель на первый элемент
-    while (temp->next != nullptr) // пока ее поле next не пустой указатель (если пустой, то мы достигли последнего элемента!)
+	if (firstItem == nullptr) return nullptr; // если список пуст, то вернем пустой указатель
+	auto temp = firstItem; // временной переменной присваиваем указатель на первый элемент
+    while (temp->next != nullptr)
     {
-        // запомните это присваивание - это переход к следующему в списке элементу
         temp = temp->next;  // перемещаемся к следующему элементу списка
     }
-    return temp; // возвращаем указатель на последний элемент
+	return temp; // возвращаем указатель на последний элемент
 }// Функция получения указателя на последний элемент
 
 ListItem* AddLast(ListItem*& firstItem, int productId, const char* productName, float productPrice, float productCount)
@@ -53,17 +52,18 @@ ListItem* AddLast(ListItem*& firstItem, int productId, const char* productName, 
 
 ListItem* SearchByPriceRange(ListItem* firstItem, float bottom, float top)
 {
-    if (firstItem == nullptr) return nullptr;
-    ListItem* newList = new ListItem;
+    if (firstItem == nullptr) return nullptr;   //если список пуст, то возвращаем нулевой указатель
+    ListItem* newList = new ListItem;   
     newList = nullptr;
-    while (newList != nullptr)
+    while (firstItem != nullptr)    //пока список не кончится проверяем товары и добавляем их в новый список
     {
-        if (firstItem->price < top && firstItem->price > bottom)
+        if (firstItem->price <= top && firstItem->price >= bottom)
             AddLast(newList, firstItem->id, firstItem->name, firstItem->price, firstItem->count);
-        firstItem = firstItem->next;
+        firstItem = firstItem->next;	// двигаемся дальше по списку
     }
     return newList;
 }
+
 /*
 Создайте функцию, которая ищет в связном списке товаров товары с ценой, которая лежит в указанном диапазоне.
 Функция возвращает в качечтве результата новый список, в который включены только те товары, цена которых
